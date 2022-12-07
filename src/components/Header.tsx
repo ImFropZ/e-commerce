@@ -20,7 +20,7 @@ function Header() {
         className="ml-auto cursor-pointer sm:scale-150"
         onClick={handleHamburger}
       >
-        {<Hamburger />}
+        <img src={Hamburger} alt="Hamburger" />
       </span>
       <ol
         className={`absolute top-full z-10 left-0 right-0 ${

@@ -5,7 +5,7 @@ function Navigation() {
   return (
     <Link to="/">
       <li className="h-12 flex items-center px-4 text-xl cursor-pointer bg-secondary hover:bg-primary">
-        <Dash /> <p className="mb-1">Navigation</p>
+        <img src={Dash} alt="Dash" /> <p className="mb-1">Navigation</p>
       </li>
     </Link>
   );

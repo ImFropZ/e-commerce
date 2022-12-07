@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  height: 100vh;
+@layer base {
+  :root {
+    height: 100vh;
+    @apply bg-tertiary;
+  }
 }
 
 @layer utilities {
@@ -15,6 +18,10 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
+  }
+
+  .button {
+    @apply bg-secondary px-4 rounded-md;
   }
 }
 
@@ -40,7 +47,7 @@
 
 .scrollbar-style::-webkit-scrollbar-track {
   border-radius: 100vh;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
 }
 
 .scrollbar-style::-webkit-scrollbar-thumb {
