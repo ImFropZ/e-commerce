@@ -1,3 +1,5 @@
+import Hero from "./Hero";
 import Item from "./Item";
+import Navigation from "./Navigation";
 
-export { Item };
+export { Item, Hero, Navigation };

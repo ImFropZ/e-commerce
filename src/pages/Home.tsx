@@ -1,9 +1,10 @@
 import { CategoryRow } from "../components";
+import { Hero } from "../components/card";
 
 function Home() {
   return (
     <div className="flex flex-col mt-3 px-4 gap-3">
-      <div className="bg-black w-full h-52 rounded-lg"></div>
+      <Hero />
       <CategoryRow />
       <CategoryRow />
     </div>
