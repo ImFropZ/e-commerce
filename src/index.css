@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+  height: 100vh;
+}
+
+@layer utilities {
+  .no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+  }
+}
+
+/* Scrollbar hidden */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: hidden;
+}
+
+/* Styling on scrollbar */
+.scrollbar-style {
+  scrollbar-width: thin;
+}
+
+.scrollbar-style::-webkit-scrollbar {
+  width: 20px;
+  height: 10px;
+}
+
+.scrollbar-style::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background-color: #D9D9D9;
+}
+
+.scrollbar-style::-webkit-scrollbar-thumb {
+  background: #a4a4a4;
+  border-radius: 100vh;
+}
+
+.scrollbar-style::-webkit-scrollbar-thumb:hover {
+  background: #8f8f8f;
+}
