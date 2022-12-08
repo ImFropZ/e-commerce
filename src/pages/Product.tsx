@@ -15,16 +15,22 @@ function Product() {
           className="cursor-pointer"
           onClick={() => nav("/")}
         />
-        <img src={ShareIcon} alt="ShareIcon" className="cursor-pointer" />
+        <img
+          src={ShareIcon}
+          alt="ShareIcon"
+          className="cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+            alert(`The link has been copied.`);
+          }}
+        />
       </div>
       <div className="px-3 flex flex-col">
         <Hero className="h-96 shrink-0" />
         <h1 className="text-2xl">Product Name {id}</h1>
         <div className="flex gap-3 items-center">
           <p>Type:</p>
-          <p className="py-1 px-4 rounded-md bg-secondary cursor-pointer">
-            Red
-          </p>
+          <p className="px-4 rounded-md bg-secondary cursor-pointer">Red</p>
         </div>
         <div className="mt-2">
           <p className="bg-secondary px-2 py-1 rounded-md">

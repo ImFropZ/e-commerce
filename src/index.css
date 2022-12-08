@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    height: 100vh;
     @apply bg-tertiary;
   }
 }
@@ -23,6 +22,14 @@
   .button {
     @apply bg-secondary px-4 rounded-md;
   }
+
+  .checkbox:checked ~ div > img {
+    @apply opacity-100;
+  }
+}
+
+#root {
+  height: 100vh;
 }
 
 /* Scrollbar hidden */
