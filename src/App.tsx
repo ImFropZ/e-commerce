@@ -1,6 +1,6 @@
 import { AccountBar, Header } from "./components";
 import { Outlet, Routes, Route } from "react-router-dom";
-import { Cart, Home, Product } from "./pages";
+import { Cart, Home, Login, Product } from "./pages";
 import { CartContext } from "./contexts/cartContext";
 import { useState } from "react";
 
@@ -34,6 +34,7 @@ function App() {
           }
         >
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
         </Route>

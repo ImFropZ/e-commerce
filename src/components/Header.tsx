@@ -14,7 +14,7 @@ function Header() {
   };
 
   return (
-    <div className="relative w-screen sm:h-20 h-16 bg-primary py-2 px-5 flex justify-center items-center z-50">
+    <div className="sticky top-0 w-screen sm:h-20 h-16 bg-primary py-2 px-5 flex justify-center items-center z-50">
       <img
         src={Logo}
         alt="Logo"

@@ -9,22 +9,21 @@
 }
 
 @layer utilities {
-  .no-select {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome, Edge, Opera and Firefox */
-  }
-
   .button {
     @apply bg-secondary px-4 rounded-md;
   }
 
   .checkbox:checked ~ div > img {
     @apply opacity-100;
+  }
+
+  .login-input {
+    @apply flex gap-2 my-3 items-center;
+  }
+
+  .login-input > input[type="text"],
+  .login-input > input[type="password"] {
+    @apply rounded-md px-2 py-2 bg-primary focus:bg-slate-200 focus:outline-none;
   }
 }
 

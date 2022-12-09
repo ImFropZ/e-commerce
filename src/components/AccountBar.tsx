@@ -15,9 +15,11 @@ function AccountBar() {
         </Link>
       </div>
       <div className="h-14 w-full bg-primary flex items-center justify-center flex-col z-10">
-        <div className="px-5 py-1 bg-[#EBEBE8] rounded-lg cursor-pointer">
-          Login
-        </div>
+        <Link to="/login">
+          <div className="px-5 py-1 bg-secondary rounded-lg cursor-pointer">
+            Login
+          </div>
+        </Link>
       </div>
     </div>
   );
