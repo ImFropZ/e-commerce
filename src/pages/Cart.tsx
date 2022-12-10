@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CartItem } from "../components/card";
 import { useCartContext } from "../hooks/useCartContext";
 
@@ -21,12 +22,14 @@ function Cart() {
 
       <div className="fixed bottom-28 left-0 right-0 flex justify-between px-8 max-w-2xl bg-secondary sm:mx-auto mx-6 py-3 rounded-lg items-center">
         <div>Total: 50$</div>
-        <button
-          className="px-4 bg-slate-600 text-white rounded-md disabled:opacity-40"
-          disabled={itemsId.length === 0}
-        >
-          Checkout
-        </button>
+        <Link to="/check-out">
+          <button
+            className="px-4 bg-slate-600 text-white rounded-md disabled:opacity-40"
+            disabled={itemsId.length === 0}
+          >
+            Checkout
+          </button>
+        </Link>
       </div>
     </>
   );

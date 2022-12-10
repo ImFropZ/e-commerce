@@ -1,9 +1,8 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
 
 function Product() {
-  const nav = useNavigate();
   const { id } = useParams();
 
   return (
@@ -13,17 +12,10 @@ function Product() {
           src={BackIcon}
           alt="BackIcon"
           className="cursor-pointer"
-          onClick={() => nav("/")}
+          onClick={() => window.history.back()}
         />
-        <img
-          src={ShareIcon}
-          alt="ShareIcon"
-          className="cursor-pointer"
-          onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-            alert(`The link has been copied.`);
-          }}
-        />
+        {/* TODO: Check on Share show URL modal */}
+        <img src={ShareIcon} alt="ShareIcon" className="cursor-pointer" />
       </div>
       <div className="px-3 flex flex-col">
         <Hero className="h-96 shrink-0" />

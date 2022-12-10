@@ -1,6 +1,6 @@
 import { AccountBar, Header } from "./components";
 import { Outlet, Routes, Route } from "react-router-dom";
-import { Cart, Home, Login, Product } from "./pages";
+import { Cart, CheckOut, Home, Login, Product, SignUp } from "./pages";
 import { CartContext } from "./contexts/cartContext";
 import { useState } from "react";
 
@@ -35,8 +35,10 @@ function App() {
         >
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/check-out" element={<CheckOut />} />
         </Route>
       </Routes>
     </CartContext.Provider>
