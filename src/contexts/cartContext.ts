@@ -1,13 +1,19 @@
 import { createContext } from "react";
 
+export type Product = {
+  id: string;
+  quantity: number;
+  price: number;
+};
+
 interface ICartContext {
-  itemsId: Array<string>;
-  addCheck: (Id: string) => void;
-  removeCheck: (Id: string) => void;
+  items: Array<Product>;
+  addCheck: (item: Product) => void;
+  removeCheck: ({ id }: Product) => void;
 }
 
 export const CartContext = createContext<ICartContext>({
-  itemsId: [],
+  items: [],
   addCheck: () => {},
   removeCheck: () => {},
 });

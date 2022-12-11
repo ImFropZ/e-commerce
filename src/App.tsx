@@ -1,22 +1,22 @@
 import { AccountBar, Header } from "./components";
 import { Outlet, Routes, Route } from "react-router-dom";
 import { Cart, CheckOut, Home, Login, Product, SignUp } from "./pages";
-import { CartContext } from "./contexts/cartContext";
+import { CartContext, Product as TypeProduct } from "./contexts/cartContext";
 import { useState } from "react";
 
 function App() {
-  const [itemsId, setItemsId] = useState<Array<string>>([]);
+  const [items, setItems] = useState<Array<TypeProduct>>([]);
 
   const value = {
-    itemsId,
-    addCheck: (Id: string) => {
-      setItemsId((prev) => {
-        return [...prev, Id];
+    items,
+    addCheck: (item: TypeProduct) => {
+      setItems((prev) => {
+        return [...prev, item];
       });
     },
-    removeCheck: (Id: string) => {
-      setItemsId((prev) => {
-        return prev.filter((itemId) => itemId !== Id);
+    removeCheck: ({ id }: TypeProduct) => {
+      setItems((prev) => {
+        return prev.filter((item) => item.id !== id);
       });
     },
   };
