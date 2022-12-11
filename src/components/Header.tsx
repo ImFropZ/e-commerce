@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Logo } from "../assets/image";
 import { Hamburger } from "../assets/svg";
 import { Navigation } from "./card";
 
 function Header() {
+  const nav = useNavigate();
   const [isOpen, setOpen] = useState<boolean>(false);
   const handleHamburger = () => {
     setOpen((prev) => !prev);
@@ -14,11 +16,12 @@ function Header() {
   };
 
   return (
-    <div className="sticky top-0 w-screen sm:h-20 h-16 bg-primary py-2 px-5 flex justify-center items-center z-50">
+    <div className="sticky top-0 w-screen sm:h-20 h-16 bg-primary py-2 px-5 flex justify-center items-center z-30">
       <img
         src={Logo}
         alt="Logo"
-        className="h-full aspect-square overflow-hidden rounded-full shadow-lg"
+        className="h-full aspect-square overflow-hidden rounded-full shadow-lg cursor-pointer"
+        onClick={() => nav("/")}
       />
       <span
         className="ml-auto cursor-pointer sm:scale-150"
@@ -36,7 +39,7 @@ function Header() {
           onClick={() => setOpen(false)}
         />
         {Array.from(Array(5), (i) => {
-          return <Navigation closeNav={closeNavigation} />;
+          return <Navigation closeNav={closeNavigation} key={i} />;
         })}
       </ol>
     </div>
