@@ -5,8 +5,8 @@ type NavigationProps = {
   closeNav?: () => void;
 };
 
-function Navigation(Props: NavigationProps) {
-  const { closeNav } = Props;
+function Navigation(props: NavigationProps) {
+  const { closeNav } = props;
   return (
     <Link to="/" onClick={closeNav}>
       <li className="h-12 flex items-center px-4 text-lg cursor-pointer bg-secondary hover:bg-primary">

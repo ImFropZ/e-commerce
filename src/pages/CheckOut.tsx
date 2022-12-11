@@ -6,10 +6,10 @@ import { PaymentMethodCard } from "../components/card";
 
 function CheckOut() {
   const nav = useNavigate();
-  const { itemsId } = useCartContext();
+  const { items } = useCartContext();
 
   useEffect(() => {
-    if (itemsId.length < 1) return nav("/");
+    if (items.length < 1) return nav("/");
 
     return () => {};
   }, []);

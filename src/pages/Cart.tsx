@@ -3,7 +3,7 @@ import { CartItem } from "../components/card";
 import { useCartContext } from "../hooks/useCartContext";
 
 function Cart() {
-  const { itemsId } = useCartContext();
+  const { items } = useCartContext();
 
   return (
     <>
@@ -25,7 +25,7 @@ function Cart() {
         <Link to="/check-out">
           <button
             className="px-4 bg-slate-600 text-white rounded-md disabled:opacity-40"
-            disabled={itemsId.length === 0}
+            disabled={items.length === 0}
           >
             Checkout
           </button>
