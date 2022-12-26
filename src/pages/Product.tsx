@@ -1,9 +1,16 @@
 import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
+import { useCartContext } from "../hooks/useCartContext";
 
 function Product() {
   const { id } = useParams();
+  const { addItem } = useCartContext();
+
+  const handleCart = () => {
+    if (!id) return;
+    addItem({ id, name: "Product " + id, quantity: 1, price: 1 });
+  };
 
   return (
     <>
@@ -32,7 +39,9 @@ function Product() {
           </p>
         </div>
         <div className="self-end flex gap-3 mt-2">
-          <button className="button">Add to cart</button>
+          <button className="button" onClick={handleCart}>
+            Add to cart
+          </button>
           <button className="button">Buy</button>
         </div>
       </div>

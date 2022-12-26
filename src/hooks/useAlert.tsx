@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Modal } from "../components/modal";
 import { Success, Info, Error, Warning } from "../assets/svg";
 
 type AlertProps = {
@@ -41,12 +40,10 @@ function useAlert() {
   const Alert = () => {
     if (alert.message === "") return <></>;
     return (
-      <Modal>
-        <div className="bg-white border-black border-2 top-10 relative rounded-xl px-2 py-1">
-          <img src={ICON[alert.type || "SUCCESS"]} alt={alert.type} />
-          <div>{alert.message}</div>
-        </div>
-      </Modal>
+      <div className="fixed bg-white border-slate-400 border-2 top-10 rounded-xl px-2 py-1 z-50 left-0 right-0 w-64 mx-auto">
+        <img src={ICON[alert.type || "SUCCESS"]} alt={alert.type} />
+        <div>{alert.message}</div>
+      </div>
     );
   };
 

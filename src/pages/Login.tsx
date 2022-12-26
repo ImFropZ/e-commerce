@@ -1,8 +1,11 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Check } from "../assets/svg";
 
+import { UserAccount } from "../_helper/FakeAccount";
+
 function Login() {
+  const nav = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -16,7 +19,13 @@ function Login() {
       rememberMe: rememberMe.checked,
     };
 
-    console.table(LoginInfo);
+    if (
+      UserAccount.username === LoginInfo.username &&
+      UserAccount.password === LoginInfo.password
+    ) {
+      localStorage.setItem("isAuth", "T");
+      nav("/");
+    }
   };
 
   return (

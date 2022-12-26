@@ -9,12 +9,31 @@ function App() {
 
   const value = {
     items,
-    addCheck: (item: TypeProduct) => {
+    addItem: (item: TypeProduct) => {
+      const itemIndex = items.findIndex((_item) => _item.id === item.id);
+
+      if (itemIndex !== -1) {
+        setItems((prev) => {
+          prev[itemIndex].quantity++;
+          return prev;
+        });
+        return;
+      }
       setItems((prev) => {
         return [...prev, item];
       });
     },
-    removeCheck: ({ id }: TypeProduct) => {
+    removeItem: ({ id }: TypeProduct) => {
+      const itemIndex = items.findIndex((_item) => _item.id === id);
+
+      if (itemIndex !== -1 && items[itemIndex].quantity !== 1) {
+        setItems((prev) => {
+          prev[itemIndex].quantity--;
+          return prev;
+        });
+        return;
+      }
+
       setItems((prev) => {
         return prev.filter((item) => item.id !== id);
       });

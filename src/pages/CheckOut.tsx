@@ -1,19 +1,7 @@
-import { useCartContext } from "../hooks/useCartContext";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { BackIcon } from "../assets/svg";
 import { PaymentMethodCard } from "../components/card";
 
 function CheckOut() {
-  const nav = useNavigate();
-  const { items } = useCartContext();
-
-  useEffect(() => {
-    if (items.length < 1) return nav("/");
-
-    return () => {};
-  }, []);
-
   return (
     <>
       <div className="flex items-center justify-between mx-3 my-2">

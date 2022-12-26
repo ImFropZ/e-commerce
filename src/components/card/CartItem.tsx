@@ -1,21 +1,31 @@
-import React, { useRef } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Check } from "../../assets/svg";
-import { useCartContext } from "../../hooks/useCartContext";
+import { Product } from "../../contexts/cartContext";
 
 type CartItemsProps = {
-  id: string;
-  // name: string;
-  // quantity: number;
-  // price: number;
+  product: Product;
+  isChecked: boolean;
+  setCheckItems: Dispatch<SetStateAction<Array<Product>>>;
 };
 
 const CartItem = (props: CartItemsProps) => {
-  const { addCheck, removeCheck } = useCartContext();
+  const { product, isChecked, setCheckItems } = props;
   const checkRef = useRef<HTMLInputElement>(null);
+  const [isCheck, setCheck] = useState<boolean>(isChecked);
 
   const handleCheck = () => {
-    if (checkRef.current?.checked) return addCheck(props.id);
-    removeCheck(props.id);
+    if (checkRef.current?.checked) {
+      setCheckItems((prev) => {
+        return [...prev, product];
+      });
+      setCheck(true);
+      return;
+    }
+
+    setCheckItems((prev) => {
+      return prev.filter((item) => item.id !== product.id);
+    });
+    setCheck(false);
   };
 
   return (
@@ -26,15 +36,15 @@ const CartItem = (props: CartItemsProps) => {
           alt=""
           className="h-full bg-white aspect-square rounded-full overflow-hidden"
         />
-        <p>Name</p>
+        <p>{product.name}</p>
       </div>
       <div className="flex flex-col items-center">
         <div>Quantity</div>
-        <span>5</span>
+        <span>{product.quantity}</span>
       </div>
       <div className="flex flex-col items-center">
         <div>Price</div>
-        <span>5$</span>
+        <span>${product.price}</span>
       </div>
       <div>
         <input
@@ -42,6 +52,7 @@ const CartItem = (props: CartItemsProps) => {
           className="opacity-0 absolute w-5 h-5 checkbox z-10 cursor-pointer"
           onClick={handleCheck}
           ref={checkRef}
+          checked={isCheck}
         />
         <div className="w-5 h-5 bg-white rounded-full relative">
           <img
