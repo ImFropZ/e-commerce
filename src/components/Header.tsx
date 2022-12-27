@@ -16,7 +16,7 @@ function Header() {
   };
 
   return (
-    <div className="sticky top-0 w-screen sm:h-20 h-16 bg-primary py-2 px-5 flex justify-center items-center z-30">
+    <div className="sticky top-0 w-screen h-16 bg-primary py-2 px-5 flex justify-center items-center z-30">
       <img
         src={Logo}
         alt="Logo"
@@ -24,13 +24,13 @@ function Header() {
         onClick={() => nav("/")}
       />
       <span
-        className="ml-auto cursor-pointer sm:scale-150"
+        className="ml-auto cursor-pointer sm:scale-110"
         onClick={handleHamburger}
       >
         <img src={Hamburger} alt="Hamburger" />
       </span>
       <ol
-        className={`absolute top-full z-50 left-0 right-0 ${
+        className={`absolute top-full sm:left-auto z-50 left-0 right-0 ${
           !isOpen ? "scale-y-0 -translate-y-1/2" : ""
         } transition-all duration-200`}
       >

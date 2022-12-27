@@ -47,7 +47,9 @@ function App() {
           element={
             <>
               <Header />
-              <Outlet />
+              <div className="mb-24">
+                <Outlet />
+              </div>
               <AccountBar />
             </>
           }
