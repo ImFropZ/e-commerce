@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
+import { fetchProduct } from "../config/axios";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useCartContext } from "../contexts/CartContext";
+import { Product as TypeProduct } from "../contexts/ProductContext";
 import useAlert from "../hooks/useAlert";
 
 function Product() {
@@ -10,6 +13,7 @@ function Product() {
   const { addItem } = useCartContext();
   const { user } = useAuthContext();
   const { Alert, updateAlert } = useAlert({ type: "FADE" });
+  const [product, setProduct] = useState<TypeProduct>();
 
   const handleCart = () => {
     if (!id) return;
@@ -41,6 +45,12 @@ function Product() {
       });
   };
 
+  useEffect(() => {
+    fetchProduct(Number(id)).then((res) => {
+      setProduct(res);
+    });
+  }, []);
+
   return (
     <>
       <Alert />
@@ -60,17 +70,15 @@ function Product() {
       </div>
       <div className="flex flex-col items-center mb-24">
         <div className="px-3 flex flex-col sm:w-[40rem]">
-          <Hero className="h-96 shrink-0" />
-          <h1 className="text-2xl">Product Name {id}</h1>
+          <Hero className="h-96 shrink-0" image={product?.image || ""} />
+          <h1 className="text-2xl">{product?.title}</h1>
           <div className="flex gap-3 items-center">
             <p>Type:</p>
             <p className="px-4 rounded-md bg-secondary cursor-pointer">Red</p>
           </div>
           <div className="mt-2">
             <p className="bg-secondary px-2 py-1 rounded-md sm:min-h-[14rem]">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas
-              itaque sed nulla asperiores! Molestiae numquam porro iure dolorem
-              nobis. Architecto!Lorem ipsum dolor, sit amet consectetur
+              {product?.description}
             </p>
           </div>
           <div className="self-end flex gap-3 mt-2">
