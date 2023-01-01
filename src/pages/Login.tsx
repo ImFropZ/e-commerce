@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Check } from "../assets/svg";
 import { useAuthContext } from "../contexts/AuthContext";
 
-import { UserAccount } from "../_helper/FakeAccount";
-
 function Login() {
   const { loginWithFacebook, loginWithGoogle, loginWithEmail } =
     useAuthContext();
