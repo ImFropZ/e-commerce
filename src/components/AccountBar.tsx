@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { CartIcon, Setting } from "../assets/svg";
+import { useAuthContext } from "../contexts/AuthContext";
 import useAlert from "../hooks/useAlert";
-import { isLogin, logout } from "../_helper";
 
 function AccountBar() {
-  const { Alert, updateAlert } = useAlert();
+  const { Alert, updateAlert } = useAlert({ type: "FADE" });
+  const { user, signOut } = useAuthContext();
   const nav = useNavigate();
   const handleCart = () => {
-    if (isLogin()) return nav("/cart");
-    setTimeout(() => updateAlert(), 3000);
+    if (user) return nav("/cart");
     updateAlert({
       type: "WARNING",
       message: "You need to login first before using cart.",
@@ -34,10 +34,10 @@ function AccountBar() {
         </div>
         <div
           className={`h-14 w-full bg-primary z-10 flex ${
-            isLogin() ? AUTH.USER : AUTH.LOGIN
+            user ? AUTH.USER : AUTH.LOGIN
           }`}
         >
-          {isLogin() ? (
+          {user ? (
             <div className="flex gap-3 items-center">
               <img
                 src="#"
@@ -57,10 +57,7 @@ function AccountBar() {
             src={Setting}
             alt="Setting"
             className="cursor-pointer absolute right-2"
-            onClick={() => {
-              logout();
-              window.location.reload();
-            }}
+            onClick={signOut}
           />
         </div>
       </div>

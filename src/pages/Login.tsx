@@ -1,31 +1,28 @@
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Check } from "../assets/svg";
+import { useAuthContext } from "../contexts/AuthContext";
 
 import { UserAccount } from "../_helper/FakeAccount";
 
 function Login() {
+  const { loginWithFacebook, loginWithGoogle, loginWithEmail } =
+    useAuthContext();
   const nav = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current === null) return;
-    const { username, password, rememberMe } = formRef.current;
+    const { email, password, rememberMe } = formRef.current;
 
     const LoginInfo = {
-      username: username.value,
+      email: email.value,
       password: password.value,
       rememberMe: rememberMe.checked,
     };
 
-    if (
-      UserAccount.username === LoginInfo.username &&
-      UserAccount.password === LoginInfo.password
-    ) {
-      localStorage.setItem("isAuth", "T");
-      nav("/");
-    }
+    loginWithEmail(LoginInfo);
   };
 
   return (
@@ -38,12 +35,12 @@ function Login() {
       >
         <div className="flex flex-col items-end">
           <div className="login-input">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               name=""
-              id="username"
-              placeholder="Username"
+              id="email"
+              placeholder="Email"
               autoComplete="off"
             />
           </div>
@@ -95,10 +92,16 @@ function Login() {
       <div>
         <h3 className="text-center my-3">Or Login With</h3>
         <div className="flex gap-20">
-          <button className="px-5 py-2 rounded-xl bg-blue-600 text-slate-100">
+          <button
+            className="px-5 py-2 rounded-xl bg-blue-600 text-slate-100"
+            onClick={loginWithFacebook}
+          >
             Facebook
           </button>
-          <button className="px-5 py-2 rounded-xl bg-red-600 text-slate-100">
+          <button
+            className="px-5 py-2 rounded-xl bg-red-600 text-slate-100"
+            onClick={loginWithGoogle}
+          >
             Google
           </button>
         </div>

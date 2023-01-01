@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Check } from "../../assets/svg";
-import { Product } from "../../contexts/cartContext";
+import { Product } from "../../contexts/CartContext";
 
 type CartItemsProps = {
   product: Product;

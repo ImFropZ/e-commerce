@@ -13,15 +13,23 @@ const ICON = {
   SUCCESS: Success,
 };
 
-interface useAlert {
-  type?: "FADE" | "CLOSE";
-  duration?: number;
+interface setAlertTypeProps {
+  type: "FADE" | "CLOSE";
+  durationInMs?: number;
 }
 
-function useAlert() {
+function useAlert(props?: setAlertTypeProps) {
+  const { type, durationInMs = 3000 } = props || {
+    type: "CLOSE",
+  };
+
   const [alert, setAlert] = useState<AlertProps>({
     type: "SUCCESS",
     message: "",
+  });
+  const [alertType, setAlertType] = useState<setAlertTypeProps>({
+    type,
+    durationInMs,
   });
 
   const updateAlert = (props?: AlertProps) => {
@@ -33,6 +41,14 @@ function useAlert() {
 
     const { type, message } = props;
 
+    if (alertType?.type == "FADE") {
+      setTimeout(() => {
+        setAlert((prev) => {
+          return { ...prev, message: "" };
+        });
+      }, alertType.durationInMs);
+    }
+
     if (type === undefined)
       return setAlert((prev) => {
         return { ...prev, message };
@@ -40,6 +56,10 @@ function useAlert() {
     setAlert((prev) => {
       return { ...prev, type, message };
     });
+  };
+
+  const changeAlertType = (props: setAlertTypeProps) => {
+    setAlertType(props);
   };
 
   const Alert = () => {
@@ -56,7 +76,7 @@ function useAlert() {
     );
   };
 
-  return { updateAlert, Alert };
+  return { updateAlert, Alert, changeAlertType };
 }
 
 export default useAlert;

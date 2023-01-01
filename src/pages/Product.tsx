@@ -1,18 +1,26 @@
 import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
-import { useCartContext } from "../hooks/useCartContext";
+import { useAuthContext } from "../contexts/AuthContext";
+import { useCartContext } from "../contexts/CartContext";
 import useAlert from "../hooks/useAlert";
 
 function Product() {
   const { id } = useParams();
   const { addItem } = useCartContext();
-  const { Alert, updateAlert } = useAlert();
+  const { user } = useAuthContext();
+  const { Alert, updateAlert } = useAlert({ type: "FADE" });
 
   const handleCart = () => {
     if (!id) return;
+    if (!user) {
+      updateAlert({
+        type: "ERROR",
+        message: "You need to login before add product to your cart.",
+      });
+      return;
+    }
     addItem({ id, name: "Product " + id, quantity: 1, price: 1 });
-    setTimeout(() => updateAlert(), 3000);
     updateAlert({
       type: "SUCCESS",
       message: "The product has been added to the cart.",
@@ -23,7 +31,6 @@ function Product() {
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        setTimeout(() => updateAlert(), 3000);
         updateAlert({
           type: "INFO",
           message: "The product link has been copied to your clipboard.",

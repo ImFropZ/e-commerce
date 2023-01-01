@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CartItem } from "../components/card";
-import { Product } from "../contexts/cartContext";
-import { useCartContext } from "../hooks/useCartContext";
+import { useCartContext } from "../contexts/CartContext";
 
 function Cart() {
   const { items } = useCartContext();
-  const [checkItems, setCheckItems] = useState<Array<Product>>([]);
+  const [checkItems, setCheckItems] = useState<typeof items>([]);
   const [searchValue, setSearchValue] = useState<string>("");
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

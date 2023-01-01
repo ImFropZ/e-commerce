@@ -1,23 +1,24 @@
 import { FormEvent, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Check } from "../assets/svg";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function SignUp() {
+  const { user, signUpWithEmail } = useAuthContext();
   const formRef = useRef<HTMLFormElement>(null);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if (formRef.current === null) return;
-    const { username, password, passwordAgain, termPolicy } = formRef.current;
+    const { email, password, passwordAgain, termPolicy } = formRef.current;
 
     if (password.value !== passwordAgain.value || !termPolicy.checked) return;
 
     const signUpInfo = {
-      username: username.value,
+      email: email.value,
       password: password.value,
     };
-
-    console.table(signUpInfo);
+    signUpWithEmail(signUpInfo);
   }
 
   return (
@@ -30,12 +31,12 @@ function SignUp() {
       >
         <div className="flex flex-col items-end">
           <div className="login-input">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               name=""
-              id="username"
-              placeholder="Username"
+              id="email"
+              placeholder="Email"
               autoComplete="off"
             />
           </div>
