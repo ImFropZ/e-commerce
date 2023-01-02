@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { fetchProducts } from "../config/axios";
+import { fetchCategories, fetchProducts } from "../config/axios";
 
 export type Product = {
   id: number;
@@ -27,18 +27,12 @@ function ProductContextProvider({ children }: { children: React.ReactNode }) {
   const [category, setCategory] = useState<Array<string>>([]);
 
   useEffect(() => {
-    fetchProducts().then((res) => {
-      let categoryTmp: Array<string> = [];
-
-      res.forEach((prod) => {
-        if (categoryTmp.findIndex((val) => val === prod.category) === -1) {
-          categoryTmp = [...categoryTmp, prod.category];
-        }
-      });
-
-      setProduct(res);
-      setCategory(categoryTmp);
-    });
+    Promise.all([fetchProducts(), fetchCategories()]).then(
+      ([products, categories]) => {
+        setProduct(products);
+        setCategory(categories);
+      }
+    );
   }, []);
 
   const value = { product, category };

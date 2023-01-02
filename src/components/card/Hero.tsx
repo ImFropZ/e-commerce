@@ -5,8 +5,8 @@ type HeroProps = {
 
 function Hero({ className = "", image }: HeroProps) {
   return (
-    <div className={className + " bg-black w-full rounded-lg"}>
-      <img className="w-full h-full rounded" src={image} alt="Hero Image" />
+    <div className={className + " rounded-lg grid place-items-center "}>
+      <img className="h-full rounded" src={image} alt="Hero Image" />
     </div>
   );
 }

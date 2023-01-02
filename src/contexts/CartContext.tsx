@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { useContext } from "react";
 
 export type Product = {
-  id: string;
+  id: number;
   name: string;
   quantity: number;
   price: number;

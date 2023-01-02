@@ -34,3 +34,21 @@ export const fetchProduct = async (id: number): Promise<Product> => {
     throw new Error("Error");
   }
 };
+
+export const fetchCategories = async (): Promise<Array<string>> => {
+  try {
+    return fetchData({ url: "/products/categories" }).then((res) => res.data);
+  } catch (e) {
+    throw new Error("Error");
+  }
+};
+
+export const fetchProductInCategory = async (
+  name: string
+): Promise<Array<string>> => {
+  try {
+    return fetchData({ url: "/category/" + name }).then((res) => res.data);
+  } catch (e) {
+    throw new Error("Error");
+  }
+};

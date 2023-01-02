@@ -1,6 +1,14 @@
 import { AccountBar, Header } from "./components";
 import { Outlet, Routes, Route } from "react-router-dom";
-import { Cart, CheckOut, Home, Login, Product, SignUp } from "./pages";
+import {
+  Cart,
+  Category,
+  CheckOut,
+  Home,
+  Login,
+  Product,
+  SignUp,
+} from "./pages";
 import { CartContextProvider } from "./contexts/CartContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProductContextProvider from "./contexts/ProductContext";
@@ -23,6 +31,7 @@ function App() {
               }
             >
               <Route path="/" element={<Home />} />
+              <Route path="/category/:name" element={<Category />} />
               <Route path="/login" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/product/:id" element={<Product />} />

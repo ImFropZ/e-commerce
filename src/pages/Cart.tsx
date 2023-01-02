@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CartItem } from "../components/card";
 import { useCartContext } from "../contexts/CartContext";
+import { useProductContext } from "../contexts/ProductContext";
 
 function Cart() {
   const { items } = useCartContext();
   const [checkItems, setCheckItems] = useState<typeof items>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+  const { product } = useProductContext();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value || "");
@@ -24,11 +26,18 @@ function Cart() {
         />
         <div className="overflow-y-auto absolute sm:top-32 top-28 bottom-48 px-5 flex flex-col w-full gap-3 sm:w-[40em]">
           {items.map((item) => {
+            const { image, price } = product.find(
+              (prod) => prod.id === item.id
+            ) || {
+              image: "",
+              price: 0,
+            };
             return item.name
               .toLowerCase()
               .includes(searchValue.toLowerCase()) ? (
               <CartItem
-                product={item}
+                product={{ ...item, price }}
+                image={image}
                 isChecked={
                   checkItems.findIndex((_item) => _item.id === item.id) !== -1
                 }

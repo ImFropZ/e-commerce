@@ -6,10 +6,11 @@ type CartItemsProps = {
   product: Product;
   isChecked: boolean;
   setCheckItems: Dispatch<SetStateAction<Array<Product>>>;
+  image: string;
 };
 
 const CartItem = (props: CartItemsProps) => {
-  const { product, isChecked, setCheckItems } = props;
+  const { image, product, isChecked, setCheckItems } = props;
   const checkRef = useRef<HTMLInputElement>(null);
   const [isCheck, setCheck] = useState<boolean>(isChecked);
 
@@ -32,17 +33,17 @@ const CartItem = (props: CartItemsProps) => {
     <div className="w-full h-16 bg-secondary p-2 flex justify-between relative rounded-lg items-center">
       <div className="h-full flex items-center gap-3">
         <img
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.4d7Emr_d4fJnEE6zK7pj_wHaFK%26pid%3DApi&f=1&ipt=cb3186191d8e9e542c4887aea3360b5a83cfc6aa3afbd4b24254091d4fa09d18&ipo=images"
-          alt=""
+          src={image}
+          alt={product.name}
           className="h-full bg-white aspect-square rounded-full overflow-hidden"
         />
-        <p>{product.name}</p>
+        <p className="h-full w-2/3 overflow-hidden">{product.name}</p>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center ml-auto mx-3">
         <div>Quantity</div>
         <span>{product.quantity}</span>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mx-3">
         <div>Price</div>
         <span>${product.price}</span>
       </div>

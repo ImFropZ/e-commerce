@@ -32,12 +32,12 @@
 }
 
 /* Scrollbar hidden */
-.scrollbar-hidden {
+* {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-.scrollbar-hidden::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: hidden;
 }
 
