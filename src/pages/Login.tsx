@@ -1,12 +1,11 @@
 import { useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Check } from "../assets/svg";
 import { useAuthContext } from "../contexts/AuthContext";
 
 function Login() {
   const { loginWithFacebook, loginWithGoogle, loginWithEmail } =
     useAuthContext();
-  const nav = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +52,7 @@ function Login() {
             />
           </div>
         </div>
-        <div className="flex gap-20">
+        <div className="flex gap-10">
           <div className="flex items-center">
             <input
               type="checkbox"

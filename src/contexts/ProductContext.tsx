@@ -25,12 +25,14 @@ export function useProductContext() {
 function ProductContextProvider({ children }: { children: React.ReactNode }) {
   const [product, setProduct] = useState<Array<Product>>([]);
   const [category, setCategory] = useState<Array<string>>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     Promise.all([fetchProducts(), fetchCategories()]).then(
       ([products, categories]) => {
         setProduct(products);
         setCategory(categories);
+        setLoading(false);
       }
     );
   }, []);
@@ -38,7 +40,9 @@ function ProductContextProvider({ children }: { children: React.ReactNode }) {
   const value = { product, category };
 
   return (
-    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
+    <ProductContext.Provider value={value}>
+      {isLoading ? "Loading" : children}
+    </ProductContext.Provider>
   );
 }
 

@@ -8,16 +8,21 @@ function Category() {
   const { product, category } = useProductContext();
   const nav = useNavigate();
 
+  const cateName = name?.split("+").join(" ") || "";
+
   useEffect(() => {
-    if (category.findIndex((cate) => cate === name) === -1) return nav("/");
+    if (category.findIndex((cate) => cate === cateName) === -1)
+      return nav("/");
   }, []);
 
   return (
     <>
-      <h1 className="capitalize font-bold text-xl pl-3 my-2">- {name}</h1>
+      <h1 className="capitalize font-bold text-xl pl-3 my-2">
+        - {cateName}
+      </h1>
       <div className="flex flex-grow flex-wrap justify-center gap-5">
         {product.map((prod) => {
-          return prod.category === name ? <Item product={prod} /> : null;
+          return prod.category === cateName ? <Item product={prod} /> : null;
         })}
       </div>
     </>

@@ -1,4 +1,4 @@
-import { AccountBar, Header } from "./components";
+import { AccountBar, Header, PrivateRoute, UnauthRoute } from "./components";
 import { Outlet, Routes, Route } from "react-router-dom";
 import {
   Cart,
@@ -23,20 +23,26 @@ function App() {
               element={
                 <>
                   <Header />
-                  <div className="mb-24">
+                  <div className="mb-28">
                     <Outlet />
                   </div>
                   <AccountBar />
                 </>
               }
             >
+              {/* Unauthentication Route */}
+              <Route element={<UnauthRoute />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/sign-up" element={<SignUp />} />
+              </Route>
               <Route path="/" element={<Home />} />
               <Route path="/category/:name" element={<Category />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
               <Route path="/product/:id" element={<Product />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/check-out" element={<CheckOut />} />
+              {/* Authentication Route */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/check-out" element={<CheckOut />} />
+              </Route>
             </Route>
           </Routes>
         </CartContextProvider>
