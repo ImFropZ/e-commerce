@@ -23,7 +23,7 @@ function App() {
               element={
                 <>
                   <Header />
-                  <div className="mb-28">
+                  <div className="mb-[6.5em]">
                     <Outlet />
                   </div>
                   <AccountBar />

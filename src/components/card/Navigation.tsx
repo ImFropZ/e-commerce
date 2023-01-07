@@ -9,8 +9,6 @@ type NavigationProps = {
 function Navigation(props: NavigationProps) {
   const { closeNav, categoryName } = props;
 
-  console.log(window.location.pathname === `/category/${categoryName}`);
-
   return (
     <Link
       to={`/category/${categoryName.split(" ").join("+")}`}

@@ -15,17 +15,23 @@ function AccountBar() {
     });
   };
 
-  console.log(user?.photoURL);
-
   const AUTH = {
     LOGIN: "items-center justify-center",
     USER: "justify-between items-center px-5",
   };
 
+  const handleLogOut = () => {
+    signOut();
+    updateAlert({
+      type: "SUCCESS",
+      message: "You have been sign out from our website.",
+    });
+  };
+
   return (
     <>
       <Alert />
-      <div className="fixed bottom-0 w-screen flex justify-center">
+      <div className="fixed w-screen bottom-0 flex justify-center">
         <div
           className="absolute -top-11 bg-secondary aspect-sqaure
         rounded-full h-20 w-20 -z-10 overflow-hidden flex justify-center pt-3 outline outline-1 outline-slate-400"
@@ -62,7 +68,7 @@ function AccountBar() {
             onClick={signOut}
           /> */}
           {user ? (
-            <div className="cursor-pointer" onClick={signOut}>
+            <div className="cursor-pointer" onClick={handleLogOut}>
               Log out
             </div>
           ) : null}

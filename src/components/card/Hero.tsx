@@ -1,12 +1,11 @@
 type HeroProps = {
-  className?: string;
   image: string;
 };
 
-function Hero({ className = "", image }: HeroProps) {
+function Hero({ image }: HeroProps) {
   return (
-    <div className={className + " rounded-lg grid place-items-center "}>
-      <img className="h-full rounded" src={image} alt="Hero Image" />
+    <div className="h-full rounded-lg">
+      <img className="h-full rounded mx-auto" src={image} alt="Hero Image" />
     </div>
   );
 }

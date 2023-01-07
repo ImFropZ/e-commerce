@@ -24,7 +24,7 @@ function Cart() {
           value={searchValue}
           onChange={handleSearch}
         />
-        <div className="overflow-y-auto absolute sm:top-32 top-28 bottom-48 px-5 flex flex-col w-full gap-3 sm:w-[40em]">
+        <div className="overflow-y-auto mt-3 sm:top-32 px-5 flex flex-col w-full gap-3 sm:w-[40em] mb-5">
           {items.map((item) => {
             const { image, price } = product.find(
               (prod) => prod.id === item.id
@@ -49,7 +49,13 @@ function Cart() {
         </div>
       </div>
 
-      <div className="fixed bottom-28 left-0 right-0 flex justify-between px-8 max-w-2xl bg-secondary sm:mx-auto mx-6 py-3 rounded-lg items-center">
+      <div
+        className={`sticky bottom-28 left-0 right-0 flex justify-between px-8 max-w-2xl bg-secondary sm:mx-auto mx-6 py-3 rounded-lg items-center outline outline-slate-600 transition-all shadow-xl duration-200 ${
+          checkItems.length === 0
+            ? "translate-y-2 opacity-0"
+            : "translate-x-0 opacity-1"
+        }`}
+      >
         <div>
           Total: $
           {checkItems.reduce((total, item) => {

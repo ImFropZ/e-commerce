@@ -27,10 +27,6 @@
   }
 }
 
-#root {
-  height: 100vh;
-}
-
 /* Scrollbar hidden */
 * {
   -ms-overflow-style: none;

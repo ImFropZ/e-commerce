@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
@@ -14,6 +15,10 @@ function Product() {
   const { product } = useProductContext();
 
   const _product = product.find((prod) => prod.id === Number(id));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleCart = () => {
     if (!id) return;
@@ -69,12 +74,14 @@ function Product() {
       </div>
       <div className="flex flex-col items-center mb-24">
         <div className="px-3 flex flex-col sm:w-[40rem]">
-          <Hero className="h-96 shrink-0" image={_product?.image || ""} />
+          <div className="h-96 bg-white py-5 rounded-xl shadow-md">
+            <Hero image={_product?.image || ""} />
+          </div>
           <h1 className="text-2xl">{_product?.title}</h1>
-          <div className="flex gap-3 items-center">
+          {/* <div className="flex gap-3 items-center">
             <p>Type:</p>
             <p className="px-4 rounded-md bg-secondary cursor-pointer">Red</p>
-          </div>
+          </div> */}
           <div className="mt-2">
             <p className="bg-secondary px-2 py-1 rounded-md sm:min-h-[14rem]">
               {_product?.description}
