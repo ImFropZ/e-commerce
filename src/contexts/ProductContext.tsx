@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { Loading } from "../components";
 import { fetchCategories, fetchProducts } from "../config/axios";
 
 export type Product = {
@@ -41,7 +42,7 @@ function ProductContextProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ProductContext.Provider value={value}>
-      {isLoading ? "Loading" : children}
+      {isLoading ? <Loading /> : children}
     </ProductContext.Provider>
   );
 }

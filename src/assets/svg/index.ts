@@ -10,6 +10,7 @@ import Info from "./Info.svg";
 import Warning from "./Warning.svg";
 import Cross from "./Cross.svg";
 import Setting from "./Setting.svg";
+import LoadingIcon from "./LoadingIcon.svg";
 
 export {
   Check,
@@ -24,4 +25,5 @@ export {
   Info,
   Warning,
   Setting,
+  LoadingIcon,
 };
