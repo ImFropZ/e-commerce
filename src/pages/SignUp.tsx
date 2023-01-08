@@ -1,23 +1,37 @@
 import { FormEvent, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Check } from "../assets/svg";
+import { schema } from "../config/Joi";
 import { useAuthContext } from "../contexts/AuthContext";
 
 function SignUp() {
-  const { user, signUpWithEmail } = useAuthContext();
+  const { signUpWithEmail } = useAuthContext();
   const formRef = useRef<HTMLFormElement>(null);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if (formRef.current === null) return;
-    const { email, password, passwordAgain, termPolicy } = formRef.current;
+    const { email, password, repeat_password, termPolicy } = formRef.current;
 
-    if (password.value !== passwordAgain.value || !termPolicy.checked) return;
+    if (!termPolicy.checked) return;
+
+    try {
+      const res = schema.validate({
+        email: email.value,
+        password: password.value,
+        repeat_password: repeat_password.value,
+      });
+      if (res.error) return;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
 
     const signUpInfo = {
       email: email.value,
       password: password.value,
     };
+
     signUpWithEmail(signUpInfo);
   }
 
@@ -51,11 +65,11 @@ function SignUp() {
             />
           </div>
           <div className="login-input">
-            <label htmlFor="passwordAgain">Password again</label>
+            <label htmlFor="repeat_password">Password again</label>
             <input
               type="password"
               name=""
-              id="passwordAgain"
+              id="repeat_password"
               placeholder="Password again"
               autoComplete="off"
             />
@@ -76,7 +90,10 @@ function SignUp() {
               />
             </div>
             <label htmlFor="termPolicy" className="px-2">
-              Accept Term & Policy
+              Accept{" "}
+              <Link to={"/policies"} className="underline text-primary-900">
+                Term & Policy
+              </Link>
             </label>
           </div>
         </div>

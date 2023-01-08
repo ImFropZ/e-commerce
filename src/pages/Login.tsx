@@ -1,6 +1,9 @@
+import { browserSessionPersistence, setPersistence } from "firebase/auth";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Check } from "../assets/svg";
+import { auth } from "../config/firebase";
+import { schema } from "../config/Joi";
 import { useAuthContext } from "../contexts/AuthContext";
 
 function Login() {
@@ -16,10 +19,25 @@ function Login() {
     const LoginInfo = {
       email: email.value,
       password: password.value,
-      rememberMe: rememberMe.checked,
     };
 
-    loginWithEmail(LoginInfo);
+    try {
+      const res = schema.validate(LoginInfo);
+      if (res.error) {
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+
+    if (rememberMe?.checked === false) {
+      setPersistence(auth, browserSessionPersistence).then(() => {
+        return loginWithEmail(LoginInfo);
+      });
+    } else {
+      loginWithEmail(LoginInfo);
+    }
   };
 
   return (
@@ -70,8 +88,8 @@ function Login() {
               Remember me
             </label>
           </div>
-          <Link to="/forget-password" className="underline">
-            Forget password?
+          <Link to="/forgot-password" className="underline">
+            Forgot password?
           </Link>
         </div>
         <button type="submit" className="bg-primary px-6 py-1 my-2 rounded-lg">

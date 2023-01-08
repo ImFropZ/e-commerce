@@ -4,6 +4,7 @@ import {
   Cart,
   Category,
   CheckOut,
+  ForgotPassword,
   Home,
   Login,
   Product,
@@ -33,6 +34,7 @@ function App() {
               {/* Unauthentication Route */}
               <Route element={<UnauthRoute />}>
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/sign-up" element={<SignUp />} />
               </Route>
               <Route path="/" element={<Home />} />
