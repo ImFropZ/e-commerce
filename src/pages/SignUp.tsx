@@ -1,12 +1,14 @@
 import { FormEvent, useRef } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { Check } from "../assets/svg";
 import { schema } from "../config/Joi";
-import { useAuthContext } from "../contexts/AuthContext";
+import { authSignUpWithEmail } from "../redux";
+import { EmailPassword } from "../redux/user/userSlice";
 
-function SignUp() {
-  const { signUpWithEmail } = useAuthContext();
+function SignUp(props: PropsFromRedux) {
   const formRef = useRef<HTMLFormElement>(null);
+  const { signUpWithEmail } = props;
 
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
@@ -113,4 +115,12 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+const mapDispatch = {
+  signUpWithEmail: (obj: EmailPassword) => authSignUpWithEmail(obj),
+};
+
+const connector = connect(null, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(SignUp);

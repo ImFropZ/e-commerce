@@ -1,11 +1,14 @@
+import { connect, ConnectedProps } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { CartIcon, Setting } from "../assets/svg";
-import { useAuthContext } from "../contexts/AuthContext";
 import useAlert from "../hooks/useAlert";
+import { RootState } from "../redux/store";
+import { authSignOut } from "../redux";
 
-function AccountBar() {
+function AccountBar(props: PropsFromRedux) {
+  const { data: user } = props.user;
+  const { signOut } = props;
   const { Alert, updateAlert } = useAlert({ type: "FADE" });
-  const { user, signOut } = useAuthContext();
   const nav = useNavigate();
   const handleCart = () => {
     if (user) return nav("/cart");
@@ -48,7 +51,7 @@ function AccountBar() {
           {user ? (
             <div className="flex gap-3 items-center">
               <img
-                src={user?.photoURL || "#"}
+                src={user.photoURL || "#"}
                 alt="IMG"
                 className="h-12 aspect-square bg-slate-800 rounded-full overflow-hidden"
               />
@@ -78,4 +81,18 @@ function AccountBar() {
   );
 }
 
-export default AccountBar;
+const mapState = (state: RootState) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatch = {
+  signOut: () => authSignOut(),
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(AccountBar);

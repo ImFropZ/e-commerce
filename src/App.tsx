@@ -1,5 +1,5 @@
-import { AccountBar, Header, PrivateRoute, UnauthRoute } from "./components";
-import { Outlet, Routes, Route } from "react-router-dom";
+import { PrivateRoute, UnauthRoute } from "./components";
+import { Routes, Route } from "react-router-dom";
 import {
   Cart,
   Category,
@@ -13,24 +13,17 @@ import {
 import { CartContextProvider } from "./contexts/CartContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProductContextProvider from "./contexts/ProductContext";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import { Default } from "./layouts";
 
 function App() {
   return (
-    <AuthProvider>
+    <Provider store={store}>
       <ProductContextProvider>
         <CartContextProvider>
           <Routes>
-            <Route
-              element={
-                <>
-                  <Header />
-                  <div className="mb-[6.5em]">
-                    <Outlet />
-                  </div>
-                  <AccountBar />
-                </>
-              }
-            >
+            <Route element=<Default />>
               {/* Unauthentication Route */}
               <Route element={<UnauthRoute />}>
                 <Route path="/login" element={<Login />} />
@@ -49,7 +42,7 @@ function App() {
           </Routes>
         </CartContextProvider>
       </ProductContextProvider>
-    </AuthProvider>
+    </Provider>
   );
 }
 

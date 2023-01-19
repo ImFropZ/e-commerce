@@ -1,10 +1,19 @@
+import { connect, ConnectedProps } from "react-redux/es/exports";
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext";
+import { RootState } from "../redux/store";
 
-function PrivateRoute() {
-  const { user } = useAuthContext();
-
-  return user ? <Outlet /> : <Navigate to={"/login"} />;
+function PrivateRoute({ user }: PropsFromRedux) {
+  return user.data ? <Outlet /> : <Navigate to={"/login"} />;
 }
 
-export default PrivateRoute;
+const mapState = (state: RootState) => {
+  return {
+    user: state.user,
+  };
+};
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PrivateRoute);

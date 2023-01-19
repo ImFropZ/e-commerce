@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
@@ -6,11 +7,11 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useCartContext } from "../contexts/CartContext";
 import { useProductContext } from "../contexts/ProductContext";
 import useAlert from "../hooks/useAlert";
+import { RootState } from "../redux";
 
-function Product() {
+function Product({ user }: PropsFromRedux) {
   const { id } = useParams();
   const { addItem } = useCartContext();
-  const { user } = useAuthContext();
   const { Alert, updateAlert } = useAlert({ type: "FADE" });
   const { product } = useProductContext();
 
@@ -22,7 +23,7 @@ function Product() {
 
   const handleCart = () => {
     if (!id) return;
-    if (!user) {
+    if (!user.data) {
       updateAlert({
         type: "ERROR",
         message: "You need to login before add product to your cart.",
@@ -99,4 +100,14 @@ function Product() {
   );
 }
 
-export default Product;
+const mapState = (state: RootState) => {
+  return {
+    user: state.user,
+  };
+};
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Product);
