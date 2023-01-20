@@ -30,7 +30,7 @@ function Default({ loading, initUser, initProducts }: PropsFromRedux) {
 
 const mapState = (state: RootState) => {
   return {
-    loading: state.product.loading && state.user.loading,
+    loading: state.product.loading || state.user.loading,
   };
 };
 
