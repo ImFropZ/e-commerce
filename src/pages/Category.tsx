@@ -1,32 +1,43 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useProductContext } from "../contexts/ProductContext";
 import { Item } from "../components/card";
+import { RootState } from "../redux";
+import { connect, ConnectedProps } from "react-redux";
 
-function Category() {
+function Category({ products, categories }: PropsFromRedux) {
   const { name } = useParams();
-  const { product, category } = useProductContext();
   const nav = useNavigate();
 
   const cateName = name?.split("+").join(" ") || "";
 
   useEffect(() => {
-    if (category.findIndex((cate) => cate === cateName) === -1)
+    if (categories.findIndex((category) => category === cateName) === -1)
       return nav("/");
   }, []);
 
   return (
     <>
-      <h1 className="capitalize font-bold text-xl pl-3 my-2">
-        - {cateName}
-      </h1>
+      <h1 className="capitalize font-bold text-xl pl-3 my-2">- {cateName}</h1>
       <div className="flex flex-grow flex-wrap justify-center gap-5">
-        {product.map((prod) => {
-          return prod.category === cateName ? <Item product={prod} /> : null;
+        {products.map((product) => {
+          return product.category === cateName ? (
+            <Item product={product} />
+          ) : null;
         })}
       </div>
     </>
   );
 }
 
-export default Category;
+const mapState = (state: RootState) => {
+  return {
+    products: state.product.data.products,
+    categories: state.product.data.categories,
+  };
+};
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Category);

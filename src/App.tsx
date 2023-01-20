@@ -11,8 +11,6 @@ import {
   SignUp,
 } from "./pages";
 import { CartContextProvider } from "./contexts/CartContext";
-import { AuthProvider } from "./contexts/AuthContext";
-import ProductContextProvider from "./contexts/ProductContext";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Default } from "./layouts";
@@ -20,28 +18,26 @@ import { Default } from "./layouts";
 function App() {
   return (
     <Provider store={store}>
-      <ProductContextProvider>
-        <CartContextProvider>
-          <Routes>
-            <Route element=<Default />>
-              {/* Unauthentication Route */}
-              <Route element={<UnauthRoute />}>
-                <Route path="/login" element={<Login />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/sign-up" element={<SignUp />} />
-              </Route>
-              <Route path="/" element={<Home />} />
-              <Route path="/category/:name" element={<Category />} />
-              <Route path="/product/:id" element={<Product />} />
-              {/* Authentication Route */}
-              <Route element={<PrivateRoute />}>
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/check-out" element={<CheckOut />} />
-              </Route>
+      <CartContextProvider>
+        <Routes>
+          <Route element=<Default />>
+            {/* Unauthentication Route */}
+            <Route element={<UnauthRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/sign-up" element={<SignUp />} />
             </Route>
-          </Routes>
-        </CartContextProvider>
-      </ProductContextProvider>
+            <Route path="/" element={<Home />} />
+            <Route path="/category/:name" element={<Category />} />
+            <Route path="/product/:id" element={<Product />} />
+            {/* Authentication Route */}
+            <Route element={<PrivateRoute />}>
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/check-out" element={<CheckOut />} />
+            </Route>
+          </Route>
+        </Routes>
+      </CartContextProvider>
     </Provider>
   );
 }

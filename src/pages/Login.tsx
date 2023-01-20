@@ -15,7 +15,12 @@ import {
 
 function Login(props: PropsFromRedux) {
   const formRef = useRef<HTMLFormElement>(null);
-  const { user, signInWithEmail, signInWithFacebook, signInWithGoogle } = props;
+  const {
+    user,
+    signInWithEmail,
+    signInWithFacebook,
+    signInWithGoogle,
+  } = props;
   const { updateAlert, Alert } = useAlert({ type: "FADE" });
 
   useEffect(() => {

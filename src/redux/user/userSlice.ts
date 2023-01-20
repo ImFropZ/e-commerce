@@ -27,7 +27,7 @@ const initialState: UserState = {
 };
 
 export const authSignInWithEmail = createAsyncThunk(
-  "user/signInWithEmail",
+  "auth/signInWithEmail",
   ({ email, password }: EmailPassword) => {
     return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => userCredential.user)
@@ -36,7 +36,7 @@ export const authSignInWithEmail = createAsyncThunk(
 );
 
 export const authSignInWithGoogle = createAsyncThunk(
-  "user/signInWithGoogle",
+  "auth/signInWithGoogle",
   () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider).then((userCredential) => {
@@ -46,7 +46,7 @@ export const authSignInWithGoogle = createAsyncThunk(
 );
 
 export const authSignInWithFacebook = createAsyncThunk(
-  "user/signInWithFacebook",
+  "auth/signInWithFacebook",
   () => {
     const provider = new FacebookAuthProvider();
     return signInWithPopup(auth, provider)
@@ -60,7 +60,7 @@ export const authSignInWithFacebook = createAsyncThunk(
 );
 
 export const authSignUpWithEmail = createAsyncThunk(
-  "user/signUpWithFacebook",
+  "auth/signUpWithFacebook",
   ({ email, password }: EmailPassword) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
@@ -70,7 +70,7 @@ export const authSignUpWithEmail = createAsyncThunk(
   }
 );
 
-export const authSignOut = createAsyncThunk("user/signOut", () => {
+export const authSignOut = createAsyncThunk("auth/signOut", () => {
   return auth.signOut().catch((error) => error.message);
 });
 

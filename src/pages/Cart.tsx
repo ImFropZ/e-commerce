@@ -1,14 +1,14 @@
 import { useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { CartItem } from "../components/card";
 import { useCartContext } from "../contexts/CartContext";
-import { useProductContext } from "../contexts/ProductContext";
+import { RootState } from "../redux";
 
-function Cart() {
+function Cart({ products }: PropsFromRedux) {
   const { items } = useCartContext();
   const [checkItems, setCheckItems] = useState<typeof items>([]);
   const [searchValue, setSearchValue] = useState<string>("");
-  const { product } = useProductContext();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value || "");
@@ -26,8 +26,8 @@ function Cart() {
         />
         <div className="overflow-y-auto mt-3 sm:top-32 px-5 flex flex-col w-full gap-3 sm:w-[40em] mb-5">
           {items.map((item) => {
-            const { image, price } = product.find(
-              (prod) => prod.id === item.id
+            const { image, price } = products.find(
+              (product) => product.id === item.id
             ) || {
               image: "",
               price: 0,
@@ -75,4 +75,14 @@ function Cart() {
   );
 }
 
-export default Cart;
+const mapState = (state: RootState) => {
+  return {
+    products: state.product.data.products,
+  };
+};
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Cart);

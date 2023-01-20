@@ -3,19 +3,16 @@ import { connect, ConnectedProps } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BackIcon, ShareIcon } from "../assets/svg";
 import { Hero } from "../components/card";
-import { useAuthContext } from "../contexts/AuthContext";
 import { useCartContext } from "../contexts/CartContext";
-import { useProductContext } from "../contexts/ProductContext";
 import useAlert from "../hooks/useAlert";
 import { RootState } from "../redux";
 
-function Product({ user }: PropsFromRedux) {
+function Product({ user, products }: PropsFromRedux) {
   const { id } = useParams();
   const { addItem } = useCartContext();
   const { Alert, updateAlert } = useAlert({ type: "FADE" });
-  const { product } = useProductContext();
 
-  const _product = product.find((prod) => prod.id === Number(id));
+  const product = products.find((product) => product.id === Number(id));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,10 +28,10 @@ function Product({ user }: PropsFromRedux) {
       return;
     }
     addItem({
-      id: _product?.id || 0,
-      name: _product?.title || "",
+      id: product?.id || 0,
+      name: product?.title || "",
       quantity: 1,
-      price: _product?.price || 0,
+      price: product?.price || 0,
     });
     updateAlert({
       type: "SUCCESS",
@@ -76,16 +73,16 @@ function Product({ user }: PropsFromRedux) {
       <div className="flex flex-col items-center mb-24">
         <div className="px-3 flex flex-col sm:w-[40rem]">
           <div className="h-96 bg-white py-5 rounded-xl shadow-md">
-            <Hero image={_product?.image || ""} />
+            <Hero image={product?.image || ""} />
           </div>
-          <h1 className="text-2xl">{_product?.title}</h1>
+          <h1 className="text-2xl">{product?.title}</h1>
           {/* <div className="flex gap-3 items-center">
             <p>Type:</p>
             <p className="px-4 rounded-md bg-secondary cursor-pointer">Red</p>
           </div> */}
           <div className="mt-2">
             <p className="bg-secondary px-2 py-1 rounded-md sm:min-h-[14rem]">
-              {_product?.description}
+              {product?.description}
             </p>
           </div>
           <div className="self-end flex gap-3 mt-2">
@@ -103,6 +100,7 @@ function Product({ user }: PropsFromRedux) {
 const mapState = (state: RootState) => {
   return {
     user: state.user,
+    products: state.product.data.products,
   };
 };
 

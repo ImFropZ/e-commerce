@@ -1,14 +1,14 @@
 import { useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../assets/image";
 import { Hamburger } from "../assets/svg";
-import { useProductContext } from "../contexts/ProductContext";
+import { RootState } from "../redux";
 import { Navigation } from "./card";
 
-function Header() {
+function Header({ categories }: PropsFromRedux) {
   const nav = useNavigate();
   const [isOpen, setOpen] = useState<boolean>(false);
-  const { category } = useProductContext();
 
   const handleHamburger = () => {
     setOpen((prev) => !prev);
@@ -41,12 +41,12 @@ function Header() {
           className="fixed top-0 left-0 right-0 bottom-0 -z-10"
           onClick={() => setOpen(false)}
         />
-        {category.map((cate) => {
+        {categories.map((category) => {
           return (
             <Navigation
               closeNav={closeNavigation}
-              key={cate}
-              categoryName={cate}
+              key={category}
+              categoryName={category}
             />
           );
         })}
@@ -55,4 +55,14 @@ function Header() {
   );
 }
 
-export default Header;
+const mapState = (state: RootState) => {
+  return {
+    categories: state.product.data.categories,
+  };
+};
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Header);
