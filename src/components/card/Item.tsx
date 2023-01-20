@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Product } from "../../contexts/ProductContext";
+import { Product } from "../../redux";
 
 function Item({ product }: { product: Product }) {
   const { id, title, image } = product;

@@ -2,7 +2,7 @@ import { fetchCategories } from "./../../config/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "../../config/axios";
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   price: number;

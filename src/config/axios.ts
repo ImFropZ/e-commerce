@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Product } from "../contexts/ProductContext";
+import { Product } from "../redux";
 
 interface IFetchData {
   url: string;
