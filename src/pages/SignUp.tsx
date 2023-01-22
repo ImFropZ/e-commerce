@@ -3,8 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { Check } from "../assets/svg";
 import { schema } from "../config/Joi";
-import { authSignUpWithEmail } from "../redux";
-import { EmailPassword } from "../redux/user/userSlice";
+import { authentication, EmailPassword } from "../redux";
 
 function SignUp(props: PropsFromRedux) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -116,7 +115,8 @@ function SignUp(props: PropsFromRedux) {
 }
 
 const mapDispatch = {
-  signUpWithEmail: (obj: EmailPassword) => authSignUpWithEmail(obj),
+  signUpWithEmail: (obj: EmailPassword) =>
+    authentication({ ...obj, platform: "SIGNUP_EMAIL" }),
 };
 
 const connector = connect(null, mapDispatch);

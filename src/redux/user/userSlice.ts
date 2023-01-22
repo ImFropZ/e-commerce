@@ -14,6 +14,16 @@ export interface EmailPassword {
   password: string;
 }
 
+interface SocialMediaProps {
+  platform: "FACEBOOK" | "GOOGLE";
+}
+
+interface EmailProps extends EmailPassword {
+  platform: "EMAIL" | "SIGNUP_EMAIL";
+}
+
+type TAuthentication = SocialMediaProps | EmailProps;
+
 interface UserState {
   loading: boolean;
   data: User | null;
@@ -26,47 +36,41 @@ const initialState: UserState = {
   error: "",
 };
 
-export const authSignInWithEmail = createAsyncThunk(
-  "auth/signInWithEmail",
-  ({ email, password }: EmailPassword) => {
-    return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => userCredential.user)
-      .catch((error) => error.message);
-  }
-);
-
-export const authSignInWithGoogle = createAsyncThunk(
-  "auth/signInWithGoogle",
-  () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider).then((userCredential) => {
-      return userCredential.user;
-    });
-  }
-);
-
-export const authSignInWithFacebook = createAsyncThunk(
-  "auth/signInWithFacebook",
-  () => {
-    const provider = new FacebookAuthProvider();
-    return signInWithPopup(auth, provider)
-      .then((userCredential) => {
-        return userCredential.user;
-      })
-      .catch((error) => {
-        return error.message;
-      });
-  }
-);
-
-export const authSignUpWithEmail = createAsyncThunk(
-  "auth/signUpWithFacebook",
-  ({ email, password }: EmailPassword) => {
-    return createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        return userCredential.user;
+export const authentication = createAsyncThunk(
+  "auth/authentication",
+  (props: TAuthentication) => {
+    switch (props.platform) {
+      case "FACEBOOK": {
+        const provider = new FacebookAuthProvider();
+        return signInWithPopup(auth, provider).then((userCredential) => {
+          return userCredential.user;
+        });
       }
-    );
+      case "GOOGLE": {
+        const provider = new GoogleAuthProvider();
+        return signInWithPopup(auth, provider).then((userCredential) => {
+          return userCredential.user;
+        });
+      }
+      case "EMAIL": {
+        return signInWithEmailAndPassword(
+          auth,
+          props.email,
+          props.password
+        ).then((userCredential) => userCredential.user);
+      }
+      case "SIGNUP_EMAIL": {
+        return createUserWithEmailAndPassword(
+          auth,
+          props.email,
+          props.password
+        ).then((userCredential) => {
+          return userCredential.user;
+        });
+      }
+      default:
+        return null;
+    }
   }
 );
 
@@ -78,55 +82,15 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(authSignInWithEmail.pending, (state) => {
+    builder.addCase(authentication.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(authSignInWithEmail.fulfilled, (state, action) => {
+    builder.addCase(authentication.fulfilled, (state, action) => {
       state.loading = false;
       state.data = action.payload;
       state.error = "";
     });
-    builder.addCase(authSignInWithEmail.rejected, (state, action) => {
-      state.loading = false;
-      state.data = null;
-      state.error = action.error.message || "";
-    });
-    builder.addCase(authSignInWithGoogle.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(authSignInWithGoogle.fulfilled, (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.error = "";
-    });
-    builder.addCase(authSignInWithGoogle.rejected, (state, action) => {
-      console.log(action.payload);
-      state.loading = false;
-      state.data = null;
-      state.error = action.error.message || "";
-    });
-    builder.addCase(authSignInWithFacebook.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(authSignInWithFacebook.fulfilled, (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.error = "";
-    });
-    builder.addCase(authSignInWithFacebook.rejected, (state, action) => {
-      state.loading = false;
-      state.data = null;
-      state.error = action.error.message || "";
-    });
-    builder.addCase(authSignUpWithEmail.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(authSignUpWithEmail.fulfilled, (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.error = "";
-    });
-    builder.addCase(authSignUpWithEmail.rejected, (state, action) => {
+    builder.addCase(authentication.rejected, (state, action) => {
       state.loading = false;
       state.data = null;
       state.error = action.error.message || "";

@@ -6,21 +6,11 @@ import { Check } from "../assets/svg";
 import { auth } from "../config/firebase";
 import { schema } from "../config/Joi";
 import useAlert from "../hooks/useAlert";
-import { authSignInWithEmail, RootState } from "../redux";
-import {
-  authSignInWithFacebook,
-  authSignInWithGoogle,
-  EmailPassword,
-} from "../redux/user/userSlice";
+import { authentication, EmailPassword, RootState } from "../redux";
 
 function Login(props: PropsFromRedux) {
   const formRef = useRef<HTMLFormElement>(null);
-  const {
-    user,
-    signInWithEmail,
-    signInWithFacebook,
-    signInWithGoogle,
-  } = props;
+  const { user, signInWithEmail, signInWithFacebook, signInWithGoogle } = props;
   const { updateAlert, Alert } = useAlert({ type: "FADE" });
 
   useEffect(() => {
@@ -153,9 +143,10 @@ const mapState = (state: RootState) => {
 };
 
 const mapDispatch = {
-  signInWithEmail: (obj: EmailPassword) => authSignInWithEmail(obj),
-  signInWithGoogle: () => authSignInWithGoogle(),
-  signInWithFacebook: () => authSignInWithFacebook(),
+  signInWithEmail: (obj: EmailPassword) =>
+    authentication({ ...obj, platform: "EMAIL" }),
+  signInWithGoogle: () => authentication({ platform: "GOOGLE" }),
+  signInWithFacebook: () => authentication({ platform: "FACEBOOK" }),
 };
 
 const connector = connect(mapState, mapDispatch);
