@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Default } from "./layouts";
 import { lazy, Suspense } from "react";
-import { Profile } from "./pages";
 
+const Profile = lazy(() => import("./pages/Profile"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Category = lazy(() => import("./pages/Category"));
 const CheckOut = lazy(() => import("./pages/CheckOut"));
