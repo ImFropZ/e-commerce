@@ -3,15 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { CartIcon, Setting } from "../assets/svg";
 import useAlert from "../hooks/useAlert";
 import { RootState } from "../redux/store";
-import { authSignOut } from "../redux";
 
 function AccountBar(props: PropsFromRedux) {
   const { data: user } = props.user;
-  const { signOut } = props;
   const { Alert, updateAlert } = useAlert({ type: "FADE" });
   const nav = useNavigate();
+
   const handleCart = () => {
     if (user) return nav("/cart");
+    updateAlert({
+      type: "WARNING",
+      message: "You need to login first before using cart.",
+    });
+  };
+
+  const handleProfile = () => {
+    if (user) return nav("/profile");
     updateAlert({
       type: "WARNING",
       message: "You need to login first before using cart.",
@@ -21,14 +28,6 @@ function AccountBar(props: PropsFromRedux) {
   const AUTH = {
     LOGIN: "items-center justify-center",
     USER: "justify-between items-center px-5",
-  };
-
-  const handleLogOut = () => {
-    signOut();
-    updateAlert({
-      type: "SUCCESS",
-      message: "You have been sign out from our website.",
-    });
   };
 
   return (
@@ -64,16 +63,13 @@ function AccountBar(props: PropsFromRedux) {
               </div>
             </Link>
           )}
-          {/* <img
-            src={Setting}
-            alt="Setting"
-            className="cursor-pointer"
-            onClick={signOut}
-          /> */}
           {user ? (
-            <div className="cursor-pointer" onClick={handleLogOut}>
-              Log out
-            </div>
+            <img
+              src={Setting}
+              alt="Setting"
+              className="cursor-pointer"
+              onClick={handleProfile}
+            />
           ) : null}
         </div>
       </div>
@@ -87,11 +83,7 @@ const mapState = (state: RootState) => {
   };
 };
 
-const mapDispatch = {
-  signOut: () => authSignOut(),
-};
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

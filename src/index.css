@@ -21,9 +21,40 @@
     @apply flex gap-2 my-3 items-center;
   }
 
-  .login-input > input[type="text"],
-  .login-input > input[type="password"] {
+  .login-input > input:is([type="text"], [type="password"]) {
     @apply rounded-md px-2 py-2 bg-primary focus:bg-slate-200 focus:outline-none;
+  }
+
+  .section {
+    @apply grid gap-y-[0.32em];
+  }
+
+  .section label {
+    @apply text-xl;
+  }
+
+  .section .reset-password {
+    @apply text-inherit text-xl text-end underline;
+  }
+
+  .section .text-field {
+    @apply text-xl h-9 px-2 bg-[#d9d9d9] rounded-sm outline outline-2 outline-[#0003] focus:outline-[#0009];
+  }
+
+  .action {
+    @apply flex justify-between mt-12;
+  }
+
+  .action .btn {
+    @apply text-xl px-4 py-2 rounded-md text-white cursor-pointer;
+  }
+
+  .action .logout {
+    @apply bg-[#f53e3e];
+  }
+
+  .action .submit {
+    @apply bg-green-500;
   }
 }
 

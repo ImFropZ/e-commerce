@@ -21,7 +21,7 @@ function Category({ products, categories }: PropsFromRedux) {
       <div className="flex flex-grow flex-wrap justify-center gap-5">
         {products.map((product) => {
           return product.category === cateName ? (
-            <Item product={product} />
+            <Item product={product} key={product.id} />
           ) : null;
         })}
       </div>

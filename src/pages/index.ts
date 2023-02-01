@@ -6,6 +6,7 @@ import Product from "./Product";
 import SignUp from "./SignUp";
 import Category from "./Category";
 import ForgotPassword from "./ForgotPassword";
+import Profile from "./Profile";
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   CheckOut,
   Category,
   ForgotPassword,
+  Profile,
 };

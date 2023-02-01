@@ -51,7 +51,7 @@ const CartItem = (props: CartItemsProps) => {
         <input
           type="checkbox"
           className="opacity-0 absolute w-5 h-5 checkbox z-10 cursor-pointer"
-          onClick={handleCheck}
+          onChange={handleCheck}
           ref={checkRef}
           checked={isCheck}
         />
